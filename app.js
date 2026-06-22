@@ -16,8 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
     player.on('pause', () => { if (audioPlayer.src) audioPlayer.pause(); });
     player.on('waiting', () => { if (audioPlayer.src) audioPlayer.pause(); });
     player.on('playing', () => { if (audioPlayer.src) audioPlayer.play(); });
-    player.on('seeking', () => { 
-        if (audioPlayer.src) audioPlayer.currentTime = player.currentTime(); 
+    player.on('seeking', () => {
+        if (audioPlayer.src) audioPlayer.currentTime = player.currentTime();
     });
     player.on('timeupdate', () => {
         if (audioPlayer.src && Math.abs(audioPlayer.currentTime - player.currentTime()) > 0.5) {
@@ -38,22 +38,22 @@ loadVideoBtn.addEventListener('click', async () => {
     const url = urlInput.value.trim();
     if (!url) return;
 
-    const newVideoId = extractYouTubeId(url) || (url.length === 11 ? url : null); 
-    
+    const newVideoId = extractYouTubeId(url) || (url.length === 11 ? url : null);
+
     if (newVideoId && newVideoId.length === 11) {
-        
+
         loadVideoBtn.textContent = 'Extracting...';
         loadVideoBtn.disabled = true;
 
         try {
             // Detect if we are running locally or on a live server like Netlify
             const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-            
+
             // NOTE: You must deploy your server.js to a backend host (like Render.com) 
             // and paste its live URL below. Netlify only hosts the frontend!
-            const backendUrl = isLocal 
-                ? 'http://localhost:3000' 
-                : 'https://fitplayer-api-production.up.railway.app'; 
+            const backendUrl = isLocal
+                ? 'http://localhost:3000'
+                : 'https://fitplayer-backend-production.up.railway.app';
 
             // Call the appropriate API endpoint
             const response = await fetch(`${backendUrl}/api/extract?id=${newVideoId}`);
@@ -68,7 +68,7 @@ loadVideoBtn.addEventListener('click', async () => {
                 type: 'video/mp4',
                 src: data.videoUrl
             });
-            
+
             // Update audio source with the RAW audio stream
             if (data.audioUrl) {
                 audioPlayer.src = data.audioUrl;

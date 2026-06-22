@@ -53,7 +53,7 @@ loadVideoBtn.addEventListener('click', async () => {
             // and paste its live URL below. Netlify only hosts the frontend!
             const backendUrl = isLocal 
                 ? 'http://localhost:3000' 
-                : 'https://your-live-backend-url.onrender.com'; 
+                : 'https://fitplayer-api-production.up.railway.app'; 
 
             // Call the appropriate API endpoint
             const response = await fetch(`${backendUrl}/api/extract?id=${newVideoId}`);
